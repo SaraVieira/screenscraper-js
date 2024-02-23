@@ -1,10 +1,9 @@
 name: Release
 on:
-  workflow_run:
-    workflows: ['Snyk Security Check', 'Tests']
+  push:
     branches: [main]
-    types:
-      - completed
+  pull_request:
+    branches: [main]
 jobs:
   release:
     name: Release
@@ -17,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 'lts/*'
+          node-version: "lts/*"
       - name: Install dependencies
         run: npm ci
       - name: Release
