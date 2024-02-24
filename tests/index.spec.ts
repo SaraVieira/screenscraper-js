@@ -1,7 +1,7 @@
 import { expect, test, describe } from "vitest";
 
-import { searchGames } from "../src/index";
 import npmPackage from "../src/index";
+import { getSystems } from "../src/systems";
 
 describe("NPM Package", () => {
   test("should be an object", () => {
@@ -11,27 +11,16 @@ describe("NPM Package", () => {
   test("should have a searchGames property", () => {
     expect(npmPackage.searchGames).toBeDefined();
   });
+
+  test("should have a getSystems property", () => {
+    expect(npmPackage.getSystems).toBeDefined();
+  });
 });
 
-describe("Hello World Function", () => {
-  // it("should be a function", () => {
-  //   expect(npmPackage.searchGames).toBe();
-  //   assert.isFunction(searchGames);
-  // });
-
-  test(
-    "should return the hello world message",
-    async () => {
-      const games = await searchGames({ game: "sonic", systemId: 1 });
-      if (games.length) {
-        expect(games[0].name).toBe("Sonic The Hedgehog 2");
-        console.log(games[0].media);
-      } else {
-        throw new Error("oh no");
-      }
-    },
-    {
-      timeout: 200000,
-    }
-  );
+describe("getSystems", () => {
+  test("should return all systems", () => {
+    const systems = getSystems();
+    expect(systems.length).toBe(229);
+    expect(systems[0].name).toBe("Genesis");
+  });
 });

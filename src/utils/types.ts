@@ -3,6 +3,15 @@ export interface GameSearch {
   response: Response;
 }
 
+export interface SingleGame {
+  header: Header;
+  response: {
+    serveurs: Serveurs;
+    ssuser: Ssuser;
+    jeu: Game;
+  };
+}
+
 export interface Header {
   APIversion: string;
   dateTime: string;
