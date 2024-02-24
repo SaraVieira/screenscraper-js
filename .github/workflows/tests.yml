@@ -24,5 +24,6 @@ jobs:
       - name: create env file
         run: |
           touch .env
-          echo SCREENSCRAPPER_DEV_USERNAME=${{ secrets.SCREENSCRAPPER_DEV_USERNAME }} SCREENSCRAPPER_DEV_PASSWORD=${{ secrets.SCREENSCRAPPER_DEV_PASSWORD }} >> .env
+          echo SCREENSCRAPPER_DEV_PASSWORD=${{ secrets.SCREENSCRAPPER_DEV_PASSWORD }} >> .env
+          echo SCREENSCRAPPER_DEV_USERNAME=${{ secrets.SCREENSCRAPPER_DEV_USERNAME }} >> .env
       - run: yarn test
