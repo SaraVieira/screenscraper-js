@@ -1,7 +1,6 @@
 import { AllowedLangs, GameSearch } from "./utils/types";
 import { client } from "./utils/axios";
 import { transformGame } from "./utils/game";
-import { devParams, userParams } from "./utils/envs";
 
 export async function searchGames({
   game,

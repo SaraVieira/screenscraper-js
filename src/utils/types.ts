@@ -74,7 +74,6 @@ export interface Game {
   developpeur: Developer;
   joueurs: Players;
   note: Note;
-  topstaff: any;
   rotation: string;
   controles: string;
   couleurs: string;

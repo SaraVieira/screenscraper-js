@@ -1,5 +1,4 @@
 import { expect, test, describe } from "vitest";
-import { searchGames } from "../src/search";
 import ScreenScraperJS from "../src";
 
 describe("Search Games", () => {
