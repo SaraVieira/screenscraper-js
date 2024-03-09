@@ -1,19 +1,6 @@
-import { AllowedLangs, GameSearch, SingleGame } from "./utils/types";
+import { AllowedLangs, SingleGame } from "./utils/types";
 import { client } from "./utils/axios";
 import { transformGame } from "./utils/game";
-import { devParams, userParams } from "./utils/envs";
-
-// crc *: crc calculation of the rom file/iso/folder existing locally
-// md5 *: md5 calculation of the rom file/iso/folder existing locally
-// sha1 *: sha1 calculation of the rom file/iso/folder existing locally
-// systemeid : numerical identifier of the system (see systemsListe.php)
-// romtype : Type of "rom": single rom file / single iso file / folder
-// romname : name of the file (with extension) or name of the folder
-// romsize *: Size in byte of the file or folder
-// serialnum : Force the search for the game with the serial number of the associated rom (iso)
-// gameid **: Force the search for the game with its numerical identifier
-// * unless otherwise specified, you must send to least one (the best would be 3) of these calculations (crc, md5, sha1) of identification of rom/iso file or folder with your request AND the size.
-// **No ROM information is sent in this case.
 
 export async function getGame({
   systemId,
@@ -26,6 +13,10 @@ export async function getGame({
   romname,
   romsize,
   serialnum,
+  devid,
+  devpassword,
+  ssid,
+  sspassword,
 }: {
   gameId?: string | number;
   systemId?: number;
@@ -37,6 +28,10 @@ export async function getGame({
   romname?: string;
   romsize?: string;
   serialnum?: string;
+  devid?: string;
+  devpassword?: string;
+  ssid?: string;
+  sspassword?: string;
 }) {
   if (!gameId && (!crc || !sha1 || !md5 || !romsize)) {
     throw new Error(
@@ -47,8 +42,10 @@ export async function getGame({
     await client(`jeuInfos.php`, {
       method: "GET",
       params: {
-        ...devParams,
-        ...userParams,
+        devid,
+        devpassword,
+        ssid,
+        sspassword,
         romtype,
         output: "json",
         ...(systemId && { systemeid: systemId }),

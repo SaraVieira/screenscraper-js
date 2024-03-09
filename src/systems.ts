@@ -1,14 +1,18 @@
-import { devParams, userParams } from "./utils/envs";
-
 export const getSystems = ({
   softwareName,
-}: { softwareName?: string } = {}) => {
-  const urlParamsDev = devParams.devid
-    ? `devid=${devParams.devid}&devpassword=${devParams.devpassword}`
-    : "";
-  const urlParamsUser = userParams.ssid
-    ? `ssid=${userParams.ssid}&sspassword=${userParams.sspassword}`
-    : "";
+  devid,
+  devpassword,
+  ssid,
+  sspassword,
+}: {
+  softwareName?: string;
+  devid?: string;
+  devpassword?: string;
+  ssid?: string;
+  sspassword?: string;
+} = {}) => {
+  const urlParamsDev = devid ? `devid=${devid}&devpassword=${devpassword}` : "";
+  const urlParamsUser = ssid ? `ssid=${ssid}&sspassword=${sspassword}` : "";
   const API_URL = "https://third.screenscraper.fr/api2/mediaSysteme.php";
   const softwareNameParams = softwareName ? `softname=${softwareName}` : "";
 

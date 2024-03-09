@@ -1,11 +1,18 @@
 import { expect, test, describe } from "vitest";
 import { getGame } from "../src/game";
+import ScreenScraperJS from "../src";
 
 describe("Get One Game", () => {
   test(
     "should return one game",
     async () => {
-      const game = await getGame({ gameId: 3 });
+      const screenScraperJS = new ScreenScraperJS({
+        devId: process.env.SCREENSCRAPPER_DEV_USERNAME as string,
+        userName: process.env.SCREENSCRAPPER_USER_USERNAME as string,
+        devPassword: process.env.SCREENSCRAPPER_DEV_PASSWORD as string,
+        userPassword: process.env.SCREENSCRAPPER_USER_PASSWORD as string,
+      });
+      const game = await screenScraperJS.getGame({ gameId: 3 });
       expect(game).toEqual(
         expect.objectContaining({
           id: "3",

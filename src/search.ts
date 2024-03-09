@@ -7,11 +7,20 @@ export async function searchGames({
   game,
   systemId,
   language = "en",
+  devid,
+  devpassword,
+  ssid,
+  sspassword,
 }: {
   game: string;
   systemId: number;
   language?: AllowedLangs;
+  devid?: string;
+  devpassword?: string;
+  ssid?: string;
+  sspassword?: string;
 }) {
+  console.log(this.ssid);
   if (!game || !systemId) {
     throw new Error("game and systemId are required params");
   }
@@ -19,8 +28,10 @@ export async function searchGames({
     await client(`jeuRecherche.php`, {
       method: "GET",
       params: {
-        ...devParams,
-        ...userParams,
+        devid,
+        devpassword,
+        ssid,
+        sspassword,
         softname: "zzz",
         output: "json",
         systemeid: systemId,

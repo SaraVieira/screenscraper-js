@@ -185,3 +185,16 @@ export interface Media {
 }
 
 export type AllowedLangs = "en" | "de" | "es" | "fr" | "it" | "pt";
+
+export type GetGameProps = {
+  gameId?: string | number;
+  systemId?: number;
+  language?: AllowedLangs;
+  crc?: string;
+  md5?: string;
+  sha1?: string;
+  romtype?: string;
+  romname?: string;
+  romsize?: string;
+  serialnum?: string;
+};
