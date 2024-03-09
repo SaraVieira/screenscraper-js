@@ -83,12 +83,9 @@ export const transformGame = (game: Game, language: AllowedLangs) => {
     }),
     media: filterMedia(game.medias)?.reduce((acc, curr) => {
       const cleanCurr = omit(curr, ["sha1", "crc", "type", "parent", "md5"]);
-      // @ts-ignore
       if (!acc[curr.type]) {
-        // @ts-ignore
         acc[curr.type] = [cleanCurr];
       } else {
-        // @ts-ignore
         acc[curr.type] = [...acc[curr.type], cleanCurr];
       }
       return acc;
