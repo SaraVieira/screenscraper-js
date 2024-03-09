@@ -19,7 +19,6 @@ export async function searchGames({
   ssid?: string;
   sspassword?: string;
 }) {
-  console.log(this.ssid);
   if (!game || !systemId) {
     throw new Error("game and systemId are required params");
   }

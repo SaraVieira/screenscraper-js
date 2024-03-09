@@ -1,5 +1,14 @@
-import { omit } from "lodash-es";
 import { AllowedLangs, Game, Media } from "./types";
+
+function omit(obj: any, keys: string[]) {
+  const keysToRemove = new Set(keys.flat());
+
+  return Object.fromEntries(
+    // convert the entries back to object
+    Object.entries(obj) // convert the object to entries
+      .filter(([k]) => !keysToRemove.has(k)) // remove entries with keys that exist in the Set
+  );
+}
 
 const filterMedia = (media: Media[]) =>
   media.filter((m) => {
@@ -74,9 +83,12 @@ export const transformGame = (game: Game, language: AllowedLangs) => {
     }),
     media: filterMedia(game.medias)?.reduce((acc, curr) => {
       const cleanCurr = omit(curr, ["sha1", "crc", "type", "parent", "md5"]);
+      // @ts-ignore
       if (!acc[curr.type]) {
+        // @ts-ignore
         acc[curr.type] = [cleanCurr];
       } else {
+        // @ts-ignore
         acc[curr.type] = [...acc[curr.type], cleanCurr];
       }
       return acc;
