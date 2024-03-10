@@ -89,6 +89,6 @@ export const transformGame = (game: Game, language: AllowedLangs) => {
         acc[curr.type] = [...acc[curr.type], cleanCurr];
       }
       return acc;
-    }, {}),
+    }, {} as { [type: string]: any }),
   };
 };
