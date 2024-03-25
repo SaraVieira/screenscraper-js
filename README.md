@@ -1,29 +1,200 @@
-# modern-npm-package
+# ScreenScraperJS
 
-An npm package for demonstration purposes using TypeScript to build for both the ECMAScript Module format (i.e. ESM or ES Module) and CommonJS Module format (CJS). It can be used in Node.js and browser applications.
+A Javascript wrapper for the [ScreenScraper](https://www.screenscraper.fr/) API.
 
-## Get Started
+## Installation
 
-1. Run `npm install` in your terminal
-1. Then run `npm run build`
-1. Update the `package.json` file "name" field with your own package name. Example `@username/package-name`
-1. Create an account with [npm](https://www.npmjs.com/signup) if you don't have one already. Also be sure to enable [two-factor authentication](https://docs.npmjs.com/configuring-two-factor-authentication)
-1. Sign in to your npm account in your terminal with `npm login`
-1. Run `npm publish --access=public` to publish your package
+```bash
+yarn add screenscraper-js
+# or
+npm install screenscraper-js
+# or
+pnpm install screenscraper-js
+```
 
-### Testing
+## What does it add?
 
-1. Install developer dependencies using the following command in your terminal `npm i -D mocha @types/mocha chai @types/chai ts-node`
-1. Create a new file `.mocharc.json` in the root directory with the following contents:
-   ```json
-   {
-     "extension": ["ts"],
-     "spec": "./**/*.spec.ts",
-     "require": "ts-node/register"
-   }
-   ```
-1. Create a `tests` folder
-1. Create an `index.spec.ts` file in the `tests` folder
-1. Write unit tests in the `index.spec.ts` file to test the code in `index.ts`
-1. Add a `"test"` property in the `package.json` file and give it a value of `"mocha"`
-1. Run `npm test` in your terminal from the root folder of the project
+- Unified types
+- Retries on fail
+- Only returns text in the selected language, defaults to english
+- Cleans up all the returns to have it be consistent
+- Translate all the parameters and return object into english
+
+## Usage/Examples
+
+First you need to initialize `screenscraper-js` by having:
+
+```javascript
+const screenScraperJS = new ScreenScraperJS({
+  // required
+  // you can request a developer account here: https://www.screenscraper.fr/forumsujets.php?frub=12&numpage=0
+  devId: "yourDevID",
+  devPassword: "yourDevPassword",
+  // optional
+  userName: "yourUserName",
+  userPassword: "yourUserPassword",
+});
+```
+
+Now you may use it and right now it contains three functions:
+
+### Get a signle game
+
+```javascript
+const game = await screenScraperJS.getGame({ gameId: 3 });
+```
+
+#### Parameters
+
+```typescript
+{
+  gameId?: string | number;
+  systemId?: number;
+  language?: "en" | "de" | "es" | "fr" | "it" | "pt";;
+  crc?: string;
+  md5?: string;
+  sha1?: string;
+  romtype?: string;
+  romname?: string;
+  romsize?: string;
+  serialnum?: string;
+}
+```
+
+### Returns type
+
+```typescript
+{
+    id: string;
+    publisher: Editor;
+    developer: Developer;
+    players: string;
+    rotation: string;
+    rating: string;
+    system: System;
+    name: string;
+    synopsis: string | undefined;
+    classifications: {
+        type: string;
+        text: string;
+    },
+    dates: string,
+    family: {
+        id: string,
+        shortName: string,
+        name: string,
+    },
+    genres: {
+        id: string,
+        name: string,
+    }
+    modes: {
+        id: string,
+        name: string,
+    },
+    media: {
+        [type: string]: any;
+    }
+}
+```
+
+### Search for a game
+
+```javascript
+const game = await screenScraperJS.getGame({ gameId: 3 });
+```
+
+#### Parameters
+
+```ts
+{
+  game: string;
+  systemId: number;
+  language?: "en" | "de" | "es" | "fr" | "it" | "pt";;
+}
+```
+
+### Returns type
+
+```typescript
+{
+    id: string;
+    publisher: Editor;
+    developer: Developer;
+    players: string;
+    rotation: string;
+    rating: string;
+    system: System;
+    name: string;
+    synopsis: string | undefined;
+    classifications: {
+        type: string;
+        text: string;
+    },
+    dates: string,
+    family: {
+        id: string,
+        shortName: string,
+        name: string,
+    },
+    genres: {
+        id: string,
+        name: string,
+    }
+    modes: {
+        id: string,
+        name: string,
+    },
+    media: {
+        [type: string]: any;
+    }
+}[]
+```
+
+### Get systems
+
+```javascript
+const systems = await screenScraperJS.getSystems();
+```
+
+### Returns type
+
+```ts
+export interface System {
+  id: number;
+  extensions: string;
+  type: string;
+  romtype: string;
+  name: string;
+  company: string;
+  releaseDate: string;
+  endOfLiveDate: string;
+  mediaType: string;
+  media: Media;
+}
+
+export interface Media {
+  "logo-monochrome": SingleMedia[];
+  wheel: SingleMedia[];
+  "logo-monochrome-svg": SingleMedia[];
+  "logo-svg": SingleMedia[];
+  photo: SingleMedia[];
+  illustration: SingleMedia[];
+  controller: SingleMedia[];
+  background: SingleMedia[];
+  screenmarquee: SingleMedia[];
+  "screenmarquee-vierge": SingleMedia[];
+  "bezel-4-3": SingleMedia[];
+  "bezel-16-9": SingleMedia[];
+}
+
+interface SingleMedia {
+  region: string;
+  format: string;
+  url: string;
+}
+```
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
